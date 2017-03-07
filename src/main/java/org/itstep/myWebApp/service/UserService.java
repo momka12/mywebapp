@@ -5,8 +5,6 @@ import org.itstep.myWebApp.repository.UserRepository;
 
 import java.util.List;
 
-// testGit
-
 public class UserService {
 
     private UserRepository repository = new UserRepository();
