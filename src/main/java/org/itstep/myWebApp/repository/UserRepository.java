@@ -34,4 +34,11 @@ public class UserRepository {
         users.put(user.getId(), user);
     }
 
+    public User get(Integer id) {
+        return users.get(id);
+    }
+
+    public void updateUser(Integer id, User user) {
+        users.replace(id, user);
+    }
 }
