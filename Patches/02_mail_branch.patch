@@ -1,0 +1,166 @@
+Index: src/main/java/org/itstep/myWebApp/model/Mail.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/org/itstep/myWebApp/model/Mail.java	(revision 46bf005cbb039383f3fe26069a7d9a67fe4f98c6)
++++ src/main/java/org/itstep/myWebApp/model/Mail.java	(revision )
+@@ -1,4 +1,74 @@
+ package org.itstep.myWebApp.model;
+ 
+-public class Mail {
++import java.time.LocalDateTime;
++
++public class Mail extends Entity {
++
++    private String text;
++
++    private String to; // email
++
++    private LocalDateTime created;
++
++    private User user; // owner
++
++    public Mail() {
++    }
++
++    public Mail(Integer id, String name, String text, String to, LocalDateTime created, User user) {
++        this.id = id;
++        this.name = name;
++        this.text = text;
++        this.to = to;
++        this.created = created;
++        this.user = user;
++    }
++
++    public Integer getId() {
++        return id;
++    }
++
++    public void setId(Integer id) {
++        this.id = id;
++    }
++
++    public String getName() {
++        return name;
++    }
++
++    public void setName(String name) {
++        this.name = name;
++    }
++
++    public String getText() {
++        return text;
++    }
++
++    public void setText(String text) {
++        this.text = text;
++    }
++
++    public String getTo() {
++        return to;
++    }
++
++    public void setTo(String to) {
++        this.to = to;
++    }
++
++    public LocalDateTime getCreated() {
++        return created;
++    }
++
++    public void setCreated(LocalDateTime created) {
++        this.created = created;
++    }
++
++    public User getUser() {
++        return user;
++    }
++
++    public void setUser(User user) {
++        this.user = user;
++    }
+ }
+Index: src/main/java/org/itstep/myWebApp/model/User.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/org/itstep/myWebApp/model/User.java	(revision 46bf005cbb039383f3fe26069a7d9a67fe4f98c6)
++++ src/main/java/org/itstep/myWebApp/model/User.java	(revision )
+@@ -1,11 +1,7 @@
+ package org.itstep.myWebApp.model;
+ 
+ 
+-public class User {
+-
+-    private Integer id;
+-
+-    private String name;
++public class User extends Entity {
+ 
+     private String lastname;
+ 
+Index: src/main/java/org/itstep/myWebApp/service/MailService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/org/itstep/myWebApp/service/MailService.java	(revision )
++++ src/main/java/org/itstep/myWebApp/service/MailService.java	(revision )
+@@ -0,0 +1,10 @@
++package org.itstep.myWebApp.service;
++
++
++import org.itstep.myWebApp.repository.MailRepository;
++
++public class MailService {
++
++    private MailRepository repository;
++
++}
+Index: src/main/java/org/itstep/myWebApp/web/MailServlet.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/org/itstep/myWebApp/web/MailServlet.java	(revision 46bf005cbb039383f3fe26069a7d9a67fe4f98c6)
++++ src/main/java/org/itstep/myWebApp/web/MailServlet.java	(revision )
+@@ -1,5 +1,7 @@
+ package org.itstep.myWebApp.web;
+ 
++import org.itstep.myWebApp.service.MailService;
++
+ import javax.servlet.ServletException;
+ import javax.servlet.annotation.WebServlet;
+ import javax.servlet.http.HttpServlet;
+@@ -10,6 +12,8 @@
+ @WebServlet("/mail")
+ public class MailServlet extends HttpServlet {
+ 
++    private MailService service;
++
+     @Override
+     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+ //        req.getRequestDispatcher("/my.html").forward(req,resp);
+Index: src/main/java/org/itstep/myWebApp/model/Entity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/org/itstep/myWebApp/model/Entity.java	(revision )
++++ src/main/java/org/itstep/myWebApp/model/Entity.java	(revision )
+@@ -0,0 +1,13 @@
++package org.itstep.myWebApp.model;
++
++public class Entity {
++
++    protected Integer id;
++
++    protected String name;
++
++    protected Entity() {
++
++    }
++
++}

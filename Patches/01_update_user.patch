@@ -1,0 +1,182 @@
+Index: src/main/webapp/userList.jsp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/webapp/userList.jsp	(revision 46bf005cbb039383f3fe26069a7d9a67fe4f98c6)
++++ src/main/webapp/userList.jsp	(revision )
+@@ -14,6 +14,8 @@
+         <td>Last name</td>
+         <td>City</td>
+         <td>Email</td>
++        <td></td>
++        <td></td>
+     </tr>
+     </thead>
+ 
+@@ -40,6 +42,7 @@
+             <td>${user.lastname}</td>
+             <td>${user.city}</td>
+             <td>${user.email}</td>
++            <td><a href="users?action=update&id=${user.id}">UPDATE</a> </td>
+             <td><a href="users?action=delete&id=${user.id}">DELETE</a></td>
+         </tr>
+     </c:forEach>
+Index: src/main/webapp/editUser.jsp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/webapp/editUser.jsp	(revision 46bf005cbb039383f3fe26069a7d9a67fe4f98c6)
++++ src/main/webapp/editUser.jsp	(revision )
+@@ -13,14 +13,21 @@
+ <body>
+     <form method="post" action="users">
+         <jsp:useBean id="user" scope="request" class="org.itstep.myWebApp.model.User"/>
++
++        <input type="hidden" name="id" value="${user.id}">
++
+         <dl>Name:</dl>
+         <dt><input type="text" name="name" value="${user.name}"></dt>
++
+         <dl>Last name:</dl>
+         <dt><input type="text" name="lastname" value="${user.lastname}"></dt>
++
+         <dl>City:</dl>
+         <dt><input type="text" name="city" value="${user.city}"></dt>
++
+         <dl>Email:</dl>
+         <dt><input type="email" name="email" value="${user.email}"></dt>
++
+         <button type="submit">SAVE</button>
+     </form>
+ </body>
+Index: src/main/java/org/itstep/myWebApp/web/UserServlet.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/org/itstep/myWebApp/web/UserServlet.java	(revision 46bf005cbb039383f3fe26069a7d9a67fe4f98c6)
++++ src/main/java/org/itstep/myWebApp/web/UserServlet.java	(revision )
+@@ -18,29 +18,49 @@
+     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+ 
+         String action = req.getParameter("action");
++        if (action == null) action = "getAll";
+ 
+-        if (action == null) {
+-            List<User> users = service.getAll();
+-            req.setAttribute("userList", users);
+-            req.getRequestDispatcher("userList.jsp").forward(req, resp);
+-        } else if (action.equals("delete")) {
+-            Integer id = Integer.valueOf(req.getParameter("id"));
+-            service.delete(id);
+-            resp.sendRedirect("users");
+-        } else if (action.equals("create")) {
+-            req.setAttribute("user", new User("name", "lastname", "city", "email"));
+-            req.getRequestDispatcher("editUser.jsp").forward(req, resp);
++        switch (action) {
++            case "create":
++                req.setAttribute("user", new User("name", "lastname", "city", "email"));
++                req.getRequestDispatcher("editUser.jsp").forward(req, resp);
++                break;
++            case "delete":
++                Integer id = Integer.valueOf(req.getParameter("id"));
++                service.delete(id);
++                resp.sendRedirect("users");
++                break;
++            case "update":
++                id = Integer.valueOf(req.getParameter("id"));
++                User user = service.getById(id);
++                req.setAttribute("user", user);
++                req.getRequestDispatcher("editUser.jsp").forward(req, resp);
++                break;
++            case "getAll":
++                List<User> users = service.getAll();
++                req.setAttribute("userList", users);
++                req.getRequestDispatcher("userList.jsp").forward(req, resp);
++                break;
+         }
++
+     }
+ 
+     @Override
+     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+-        String name = req.getParameter("name");
+-        String lastname = req.getParameter("lastname");
+-        String city = req.getParameter("city");
+-        String email = req.getParameter("email");
+-        service.add(new User(name, lastname, city, email));
++
++        String id = req.getParameter("id");
++
++        User user = id.isEmpty() ? new User() : service.getById(Integer.valueOf(id));
++
++        user.setName(req.getParameter("name"));
++        user.setLastname(req.getParameter("lastname"));
++        user.setCity(req.getParameter("city"));
++        user.setEmail(req.getParameter("email"));
++
++        service.save(user);
+ 
+         resp.sendRedirect("users");
++
+     }
++
+ }
+Index: src/main/java/org/itstep/myWebApp/repository/UserRepository.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/org/itstep/myWebApp/repository/UserRepository.java	(revision 46bf005cbb039383f3fe26069a7d9a67fe4f98c6)
++++ src/main/java/org/itstep/myWebApp/repository/UserRepository.java	(revision )
+@@ -14,8 +14,8 @@
+     private AtomicInteger counter = new AtomicInteger(1);
+ 
+     {
+-        add(new User("nick", "dalls", "dnipro", "user@gmail.com"));
+-        add(new User("angela", "hike", "kyiv", "ang@yahoo.com"));
++        save(new User("nick", "dalls", "dnipro", "user@gmail.com"));
++        save(new User("angela", "hike", "kyiv", "ang@yahoo.com"));
+     }
+ 
+     public List<User> getAll() {
+@@ -26,7 +26,7 @@
+         users.remove(id);
+     }
+ 
+-    public void add(User user) {
++    public void save(User user) {
+         if (user.getId() == null) {
+             user.setId(counter.getAndIncrement());
+         }
+@@ -34,4 +34,7 @@
+         users.put(user.getId(), user);
+     }
+ 
++    public User getById(Integer id) {
++        return users.get(id);
++    }
+ }
+Index: src/main/java/org/itstep/myWebApp/service/UserService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/org/itstep/myWebApp/service/UserService.java	(revision 46bf005cbb039383f3fe26069a7d9a67fe4f98c6)
++++ src/main/java/org/itstep/myWebApp/service/UserService.java	(revision )
+@@ -17,7 +17,11 @@
+         repository.delete(id);
+     }
+ 
+-    public void add(User user) {
+-        repository.add(user);
++    public void save(User user) {
++        repository.save(user);
++    }
++
++    public User getById(Integer id) {
++        return repository.getById(id);
+     }
+ }
