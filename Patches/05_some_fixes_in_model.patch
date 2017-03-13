@@ -1,0 +1,117 @@
+Index: src/main/java/org/itstep/myWebApp/model/Mail.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/org/itstep/myWebApp/model/Mail.java	(revision d3b385250198c1c6dd35c4eb8c4bc865f74c36e0)
++++ src/main/java/org/itstep/myWebApp/model/Mail.java	(revision 971ff77135e99d63f3c2527e0ac9689dd92e0030)
+@@ -24,22 +24,6 @@
+         this.user = user;
+     }
+ 
+-    public Integer getId() {
+-        return id;
+-    }
+-
+-    public void setId(Integer id) {
+-        this.id = id;
+-    }
+-
+-    public String getName() {
+-        return name;
+-    }
+-
+-    public void setName(String name) {
+-        this.name = name;
+-    }
+-
+     public String getText() {
+         return text;
+     }
+@@ -71,4 +55,14 @@
+     public void setUser(User user) {
+         this.user = user;
+     }
++
++    @Override
++    public String toString() {
++        return "Mail{" +
++                "text='" + text + '\'' +
++                ", to='" + to + '\'' +
++                ", created=" + created +
++                ", user=" + user +
++                "}";
++    }
+ }
+Index: src/main/java/org/itstep/myWebApp/model/User.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/org/itstep/myWebApp/model/User.java	(revision d3b385250198c1c6dd35c4eb8c4bc865f74c36e0)
++++ src/main/java/org/itstep/myWebApp/model/User.java	(revision 971ff77135e99d63f3c2527e0ac9689dd92e0030)
+@@ -27,22 +27,6 @@
+         this.email = email;
+     }
+ 
+-    public Integer getId() {
+-        return id;
+-    }
+-
+-    public void setId(Integer id) {
+-        this.id = id;
+-    }
+-
+-    public String getName() {
+-        return name;
+-    }
+-
+-    public void setName(String name) {
+-        this.name = name;
+-    }
+-
+     public String getLastname() {
+         return lastname;
+     }
+@@ -66,4 +50,13 @@
+     public void setEmail(String email) {
+         this.email = email;
+     }
++
++    @Override
++    public String toString() {
++        return "User{" +
++                "lastname='" + lastname + '\'' +
++                ", city='" + city + '\'' +
++                ", email='" + email + '\'' +
++                '}';
++    }
+ }
+Index: src/main/java/org/itstep/myWebApp/model/Entity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/org/itstep/myWebApp/model/Entity.java	(revision d3b385250198c1c6dd35c4eb8c4bc865f74c36e0)
++++ src/main/java/org/itstep/myWebApp/model/Entity.java	(revision 971ff77135e99d63f3c2527e0ac9689dd92e0030)
+@@ -6,8 +6,19 @@
+ 
+     protected String name;
+ 
+-    protected Entity() {
++    public Integer getId() {
++        return id;
++    }
+ 
++    public void setId(Integer id) {
++        this.id = id;
+     }
+ 
++    public String getName() {
++        return name;
++    }
++
++    public void setName(String name) {
++        this.name = name;
++    }
+ }

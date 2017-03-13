@@ -1,0 +1,132 @@
+Index: src/main/java/org/itstep/myWebApp/model/Mail.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>windows-1251
+===================================================================
+--- src/main/java/org/itstep/myWebApp/model/Mail.java	(revision 971ff77135e99d63f3c2527e0ac9689dd92e0030)
++++ src/main/java/org/itstep/myWebApp/model/Mail.java	(revision ea1c61293d6ec60647b40858cecee26bf60e284f)
+@@ -10,18 +10,18 @@
+ 
+     private LocalDateTime created;
+ 
+-    private User user; // owner
++    private Integer userId; // owner
+ 
+     public Mail() {
+     }
+ 
+-    public Mail(Integer id, String name, String text, String to, LocalDateTime created, User user) {
++    public Mail(Integer id, String name, String text, String to, LocalDateTime created, Integer userId) {
+         this.id = id;
+         this.name = name;
+         this.text = text;
+         this.to = to;
+         this.created = created;
+-        this.user = user;
++        this.userId = userId;
+     }
+ 
+     public String getText() {
+@@ -48,12 +48,12 @@
+         this.created = created;
+     }
+ 
+-    public User getUser() {
+-        return user;
++    public Integer getUserId() {
++        return userId;
+     }
+ 
+-    public void setUser(User user) {
+-        this.user = user;
++    public void setUserId(Integer userId) {
++        this.userId = userId;
+     }
+ 
+     @Override
+@@ -62,7 +62,7 @@
+                 "text='" + text + '\'' +
+                 ", to='" + to + '\'' +
+                 ", created=" + created +
+-                ", user=" + user +
++                ", userId=" + userId +
+                 "}";
+     }
+ }
+Index: src/main/java/org/itstep/myWebApp/service/UserService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>windows-1251
+===================================================================
+--- src/main/java/org/itstep/myWebApp/service/UserService.java	(revision 971ff77135e99d63f3c2527e0ac9689dd92e0030)
++++ src/main/java/org/itstep/myWebApp/service/UserService.java	(revision ea1c61293d6ec60647b40858cecee26bf60e284f)
+@@ -4,18 +4,20 @@
+ import org.itstep.myWebApp.repository.UserRepository;
+ import org.springframework.beans.factory.annotation.Autowired;
+ import org.springframework.stereotype.Controller;
++import org.springframework.stereotype.Service;
+ 
+ import java.util.List;
+ 
+-@Controller
++@Service
+ public class UserService {
+ 
+     @Autowired
+     private UserRepository repository;
+ 
+-    public void setRepository(UserRepository repository) {
+-        this.repository = repository;
+-    }
++    /*needs for xml dependency injections*/
++//    public void setRepository(UserRepository repository) {
++//        this.repository = repository;
++//    }
+ 
+     public List<User> getAll() {
+         return repository.getAll();
+Index: src/main/resources/spring.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/resources/spring.xml	(revision 971ff77135e99d63f3c2527e0ac9689dd92e0030)
++++ src/main/resources/spring.xml	(revision ea1c61293d6ec60647b40858cecee26bf60e284f)
+@@ -17,6 +17,5 @@
+     <context:annotation-config/>
+     <context:component-scan base-package="org.itstep.myWebApp.repository"/>
+     <context:component-scan base-package="org.itstep.myWebApp.service"/>
+-    <context:component-scan base-package="org.itstep.myWebApp.web"/>
+ 
+ </beans>
+\ No newline at end of file
+Index: src/main/webapp/userList.jsp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/webapp/userList.jsp	(revision 971ff77135e99d63f3c2527e0ac9689dd92e0030)
++++ src/main/webapp/userList.jsp	(revision ea1c61293d6ec60647b40858cecee26bf60e284f)
+@@ -19,22 +19,6 @@
+     </tr>
+     </thead>
+ 
+-  <%--  // simple java realization
+-    <%
+-        for (User user : (List<User>) request.getAttribute("userList")) {
+-        %>
+-        <tr>
+-            <td><%=user.getName()%></td>
+-            <td><%=user.getLastname()%></td>
+-            <td><%=user.getCity()%></td>
+-            <td><%=user.getEmail()%></td>
+-            <td></td>
+-        </tr>
+-        <%
+-        }
+-    %>--%>
+-
+-    <%-- jstl realization - без костылей :)--%>
+     <c:forEach items="${userList}" var="user">
+         <tr>
+             <jsp:useBean id="user" class="org.itstep.myWebApp.model.User"/>

@@ -1,0 +1,116 @@
+Index: src/main/webapp/WEB-INF/web.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/webapp/WEB-INF/web.xml	(revision 6fb62c9f61a7d3d50938834cb7e66c679d78bf2b)
++++ src/main/webapp/WEB-INF/web.xml	(revision )
+@@ -1,14 +1,23 @@
+ <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xmlns="http://java.sun.com/xml/ns/javaee"
+          xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+-        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+-        http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+-        id="WebApp_ID" version="3.0">
++         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
++         http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
++         id="WebApp_ID" version="3.0">
+ 
+-        <servlet>
+-    <servlet-name>MyServlet</servlet-name>
+-    <servlet-class>org.itstep.myWebApp.web.UserServlet</servlet-class>
+-</servlet>
++    <context-param>
++        <param-name>contextConfigLocation</param-name>
++        <param-value>classpath:spring.xml</param-value>
++    </context-param>
++
++    <listener>
++        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
++    </listener>
++
++    <servlet>
++        <servlet-name>MyServlet</servlet-name>
++        <servlet-class>org.itstep.myWebApp.web.UserServlet</servlet-class>
++    </servlet>
+     <servlet-mapping>
+         <servlet-name>MyServlet</servlet-name>
+         <url-pattern>/users</url-pattern>
+Index: src/main/java/org/itstep/myWebApp/web/UserServlet.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/org/itstep/myWebApp/web/UserServlet.java	(revision 6fb62c9f61a7d3d50938834cb7e66c679d78bf2b)
++++ src/main/java/org/itstep/myWebApp/web/UserServlet.java	(revision )
+@@ -2,8 +2,10 @@
+ 
+ import org.itstep.myWebApp.model.User;
+ import org.itstep.myWebApp.service.UserService;
+-import org.springframework.stereotype.Controller;
++import org.springframework.web.context.WebApplicationContext;
++import org.springframework.web.context.support.WebApplicationContextUtils;
+ 
++import javax.servlet.ServletConfig;
+ import javax.servlet.ServletException;
+ import javax.servlet.http.HttpServlet;
+ import javax.servlet.http.HttpServletRequest;
+@@ -13,7 +15,14 @@
+ 
+ public class UserServlet extends HttpServlet {
+ 
+-    private UserService service = new UserService();
++    private UserService service;
++
++    @Override
++    public void init(ServletConfig config) throws ServletException {
++        super.init(config);
++        WebApplicationContext webCtx = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
++        service = webCtx.getBean(UserService.class);
++    }
+ 
+     @Override
+     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+Index: pom.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- pom.xml	(revision 6fb62c9f61a7d3d50938834cb7e66c679d78bf2b)
++++ pom.xml	(revision )
+@@ -11,26 +11,33 @@
+ 
+     <properties>
+         <java.version>1.8</java.version>
++        <spring.version>4.3.7.RELEASE</spring.version>
+     </properties>
+ 
+     <dependencies>
++        <!--web-->
+         <dependency>
+             <groupId>javax.servlet</groupId>
+             <artifactId>javax.servlet-api</artifactId>
+             <version>3.1.0</version>
+             <scope>provided</scope>
+         </dependency>
+-
+         <dependency>
+             <groupId>jstl</groupId>
+             <artifactId>jstl</artifactId>
+             <version>1.2</version>
+         </dependency>
+ 
++        <!--spring-->
+         <dependency>
+             <groupId>org.springframework</groupId>
+             <artifactId>spring-context</artifactId>
+-            <version>4.3.7.RELEASE</version>
++            <version>${spring.version}</version>
++        </dependency>
++        <dependency>
++            <groupId>org.springframework</groupId>
++            <artifactId>spring-web</artifactId>
++            <version>${spring.version}</version>
+         </dependency>
+     </dependencies>
+ 

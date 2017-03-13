@@ -1,0 +1,146 @@
+Index: src/main/resources/spring.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/resources/spring.xml	(revision )
++++ src/main/resources/spring.xml	(revision )
+@@ -0,0 +1,22 @@
++<?xml version = "1.0" encoding = "UTF-8"?>
++<beans xmlns="http://www.springframework.org/schema/beans"
++       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++       xmlns:context="http://www.springframework.org/schema/context"
++       xsi:schemaLocation="http://www.springframework.org/schema/beans
++       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
++       http://www.springframework.org/schema/context
++       http://www.springframework.org/schema/context/spring-context-3.0.xsd" >
++
++    <!--xml dependency injections-->
++    <!--<bean class="org.itstep.myWebApp.repository.UserRepository" id="userRepository"/>-->
++    <!--<bean class="org.itstep.myWebApp.service.UserService" id="userService">-->
++        <!--<property name="repository" ref="userRepository"/> &lt;!&ndash;need setter in the class&ndash;&gt;-->
++    <!--</bean>-->
++
++    <!--annotation dependency injections-->
++    <context:annotation-config/>
++    <context:component-scan base-package="org.itstep.myWebApp.repository"/>
++    <context:component-scan base-package="org.itstep.myWebApp.service"/>
++    <context:component-scan base-package="org.itstep.myWebApp.web"/>
++
++</beans>
+\ No newline at end of file
+Index: src/main/java/org/itstep/myWebApp/web/UserServlet.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/org/itstep/myWebApp/web/UserServlet.java	(revision c7130785eb691e47101aca5119d8f77f1ef80bc1)
++++ src/main/java/org/itstep/myWebApp/web/UserServlet.java	(revision )
+@@ -2,6 +2,7 @@
+ 
+ import org.itstep.myWebApp.model.User;
+ import org.itstep.myWebApp.service.UserService;
++import org.springframework.stereotype.Controller;
+ 
+ import javax.servlet.ServletException;
+ import javax.servlet.http.HttpServlet;
+Index: pom.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- pom.xml	(revision c7130785eb691e47101aca5119d8f77f1ef80bc1)
++++ pom.xml	(revision )
+@@ -26,6 +26,12 @@
+             <artifactId>jstl</artifactId>
+             <version>1.2</version>
+         </dependency>
++
++        <dependency>
++            <groupId>org.springframework</groupId>
++            <artifactId>spring-context</artifactId>
++            <version>4.3.7.RELEASE</version>
++        </dependency>
+     </dependencies>
+ 
+     <build>
+Index: src/main/java/org/itstep/myWebApp/repository/UserRepository.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/org/itstep/myWebApp/repository/UserRepository.java	(revision c7130785eb691e47101aca5119d8f77f1ef80bc1)
++++ src/main/java/org/itstep/myWebApp/repository/UserRepository.java	(revision )
+@@ -1,6 +1,7 @@
+ package org.itstep.myWebApp.repository;
+ 
+ import org.itstep.myWebApp.model.User;
++import org.springframework.stereotype.Repository;
+ 
+ import java.util.ArrayList;
+ import java.util.List;
+@@ -8,6 +9,7 @@
+ import java.util.concurrent.ConcurrentHashMap;
+ import java.util.concurrent.atomic.AtomicInteger;
+ 
++@Repository
+ public class UserRepository {
+ 
+     private Map<Integer, User> users = new ConcurrentHashMap<>();
+Index: src/main/java/org/itstep/myWebApp/SpringExample.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/org/itstep/myWebApp/SpringExample.java	(revision )
++++ src/main/java/org/itstep/myWebApp/SpringExample.java	(revision )
+@@ -0,0 +1,20 @@
++package org.itstep.myWebApp;
++
++import org.itstep.myWebApp.service.UserService;
++import org.springframework.context.support.ClassPathXmlApplicationContext;
++
++import java.util.Arrays;
++
++public class SpringExample {
++
++    public static void main(String[] args) {
++
++        try (ClassPathXmlApplicationContext appCtx = new ClassPathXmlApplicationContext("spring.xml")) {
++            System.out.println(Arrays.toString(appCtx.getBeanDefinitionNames()));
++
++            UserService service = appCtx.getBean(UserService.class);
++            System.out.println(service.getAll());
++        }
++
++    }
++}
+Index: src/main/java/org/itstep/myWebApp/service/UserService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/org/itstep/myWebApp/service/UserService.java	(revision c7130785eb691e47101aca5119d8f77f1ef80bc1)
++++ src/main/java/org/itstep/myWebApp/service/UserService.java	(revision )
+@@ -2,12 +2,20 @@
+ 
+ import org.itstep.myWebApp.model.User;
+ import org.itstep.myWebApp.repository.UserRepository;
++import org.springframework.beans.factory.annotation.Autowired;
++import org.springframework.stereotype.Controller;
+ 
+ import java.util.List;
+ 
++@Controller
+ public class UserService {
+ 
+-    private UserRepository repository = new UserRepository();
++    @Autowired
++    private UserRepository repository;
++
++    public void setRepository(UserRepository repository) {
++        this.repository = repository;
++    }
+ 
+     public List<User> getAll() {
+         return repository.getAll();

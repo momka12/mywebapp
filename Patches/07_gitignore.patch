@@ -1,0 +1,15 @@
+Index: .gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>windows-1251
+===================================================================
+--- .gitignore	(revision ae0b4e9b95a6e9d2f95a68facabfae8476665101)
++++ .gitignore	(revision ae0b4e9b95a6e9d2f95a68facabfae8476665101)
+@@ -0,0 +1,6 @@
++.idea
++out
++target
++*.iml
++log
++*.patch
+\ No newline at end of file
