@@ -40,20 +40,25 @@
             <version>${spring.version}</version>
         </dependency>
 
-<<<<<<< 2a038c292baa434bfde90231d0c0d14ed1dc9527
-=======
-        <!--json-->
->>>>>>> 9 patches
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>2.8.7</version>
         </dependency>
-<<<<<<< 2a038c292baa434bfde90231d0c0d14ed1dc9527
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.2</version>
+        </dependency>
 
 
-=======
->>>>>>> 9 patches
     </dependencies>
 
     <build>
