@@ -1,3 +1,4 @@
+<<<<<<< 2a038c292baa434bfde90231d0c0d14ed1dc9527:src/main/java/org/itstep/myWebApp/web/MailServlet.java
 //package org.itstep.myWebApp.web;
 //
 //import org.itstep.myWebApp.model.Mail;
@@ -79,3 +80,27 @@
 //
 //    }
 //}
+=======
+package org.itstep.myWebApp.web.servlet;
+
+import org.itstep.myWebApp.service.MailService;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+@WebServlet("/mail")
+public class MailServlet extends HttpServlet {
+
+    private MailService service;
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        req.getRequestDispatcher("/my.html").forward(req,resp);
+        resp.sendRedirect("my.html");
+    }
+}
+>>>>>>> 9 patches:src/main/java/org/itstep/myWebApp/web/servlet/MailServlet.java

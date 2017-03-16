@@ -1,3 +1,4 @@
+<<<<<<< 2a038c292baa434bfde90231d0c0d14ed1dc9527
 <%--
   Created by IntelliJ IDEA.
   User: student
@@ -14,3 +15,15 @@
 <h1>Root page</h1>
 </body>
 </html>
+=======
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Web App</title>
+</head>
+<body>
+<h1>Hello user! This is main page of your first web app!</h1>
+</body>
+</html>
+>>>>>>> 9 patches

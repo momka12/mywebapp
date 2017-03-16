@@ -24,6 +24,7 @@ public class Mail extends Entity {
         this.userId = userId;
     }
 
+<<<<<<< 2a038c292baa434bfde90231d0c0d14ed1dc9527
     public Mail(String name, String text, String to, LocalDateTime created, Integer userId) {
         this.name = name;
         this.text = text;
@@ -48,6 +49,8 @@ public class Mail extends Entity {
         this.name = name;
     }
 
+=======
+>>>>>>> 9 patches
     public String getText() {
         return text;
     }
@@ -76,7 +79,24 @@ public class Mail extends Entity {
         return userId;
     }
 
+<<<<<<< 2a038c292baa434bfde90231d0c0d14ed1dc9527
     public void setUser(Integer userId) {
         this.userId = userId;
     }
 }
+=======
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    @Override
+    public String toString() {
+        return "Mail{" +
+                "text='" + text + '\'' +
+                ", to='" + to + '\'' +
+                ", created=" + created +
+                ", userId=" + userId +
+                "}";
+    }
+}
+>>>>>>> 9 patches

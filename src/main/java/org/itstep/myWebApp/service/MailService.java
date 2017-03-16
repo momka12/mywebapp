@@ -1,6 +1,7 @@
 package org.itstep.myWebApp.service;
 
 
+<<<<<<< 2a038c292baa434bfde90231d0c0d14ed1dc9527
 import org.itstep.myWebApp.model.Mail;
 import org.itstep.myWebApp.model.User;
 import org.itstep.myWebApp.repository.MailRepository;
@@ -40,3 +41,12 @@ public class MailService {
 //    }
 
 }
+=======
+import org.itstep.myWebApp.repository.MailRepository;
+
+public class MailService {
+
+    private MailRepository repository;
+
+}
+>>>>>>> 9 patches
