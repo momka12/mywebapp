@@ -2,8 +2,8 @@ package org.itstep.myWebApp.service;
 
 
 import org.itstep.myWebApp.model.Mail;
-import org.itstep.myWebApp.model.User;
 import org.itstep.myWebApp.repository.MailRepository;
+import org.itstep.myWebApp.repository.Mock.MockMailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

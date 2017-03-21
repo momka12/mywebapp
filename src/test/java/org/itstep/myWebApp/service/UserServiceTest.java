@@ -9,12 +9,14 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
 
-@ContextConfiguration("classpath:spring.xml")
+@ContextConfiguration({"classpath:spring.xml", "classpath:spr-db.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
+@Sql(scripts = "classpath:db/initDB.sql")
 public class UserServiceTest {
 
     @Autowired

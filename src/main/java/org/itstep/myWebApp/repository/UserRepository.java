@@ -3,42 +3,20 @@ package org.itstep.myWebApp.repository;
 import org.itstep.myWebApp.model.User;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicInteger;
 
-@Repository
-public class UserRepository {
 
-    private Map<Integer, User> users = new ConcurrentHashMap<>();
-    private AtomicInteger counter = new AtomicInteger(1);
+/**
+ * Created by student on 21.03.2017.
+ */
+public interface UserRepository {
 
-    {
-        save(new User("nick", "dalls", "dnipro", "user@gmail.com"));
-        save(new User("angela", "hike", "kyiv", "ang@yahoo.com"));
-    }
+    List<User> getAll();
 
-    public List<User> getAll() {
-        return new ArrayList<>(users.values());
-    }
+    boolean delete(Integer id);
 
-    public boolean delete(Integer id) {
-        return users.remove(id) != null;
-    }
+    User save(User user);
 
-    public User save(User user) {
-        if (user.getId() == null) {
-            user.setId(counter.getAndIncrement());
-        }
+    User getById(Integer id);
 
-        users.put(user.getId(), user);
-
-        return user;
-    }
-
-    public User getById(Integer id) {
-        return users.get(id);
-    }
 }
