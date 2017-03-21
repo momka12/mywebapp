@@ -11,10 +11,6 @@
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd">
 
-<<<<<<< 2a038c292baa434bfde90231d0c0d14ed1dc9527
-
-=======
->>>>>>> 9 patches
     <mvc:annotation-driven/>
     <context:component-scan base-package="org.itstep.myWebApp.web"/>
 

@@ -56,7 +56,7 @@ public class UserRestController {
         service.save(user);
     }
 
-    @RequestMapping(method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE)
     public User create(@Valid @RequestBody User user) {
         return service.save(user);
     }
