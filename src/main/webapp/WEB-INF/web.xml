@@ -4,8 +4,7 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
          http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          id="WebApp_ID" version="3.0">
-<<<<<<< 2a038c292baa434bfde90231d0c0d14ed1dc9527
-
+         
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath:spring.xml</param-value>
@@ -32,47 +31,13 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
-
-    <!--<servlet>-->
-        <!--<servlet-name>MyServlet</servlet-name>-->
-        <!--<servlet-class>org.itstep.myWebApp.web.UserServlet</servlet-class>-->
-=======
-
-    <context-param>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:spring.xml</param-value>
-    </context-param>
-
-    <listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>
-
-    <servlet>
-        <servlet-name>dispatcher</servlet-name>
-        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-        <init-param>
-            <param-name>contextConfigLocation</param-name>
-            <param-value>classpath:spring-mvc.xml</param-value>
-        </init-param>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>dispatcher</servlet-name>
-        <url-pattern>/</url-pattern>
-    </servlet-mapping>
-
     <!--<servlet>-->
         <!--<servlet-name>MyServlet</servlet-name>-->
         <!--<servlet-class>org.itstep.myWebApp.web.servlet.UserServlet</servlet-class>-->
->>>>>>> 9 patches
     <!--</servlet>-->
     <!--<servlet-mapping>-->
         <!--<servlet-name>MyServlet</servlet-name>-->
         <!--<url-pattern>/users</url-pattern>-->
     <!--</servlet-mapping>-->
 
-<<<<<<< 2a038c292baa434bfde90231d0c0d14ed1dc9527
 </web-app>
-=======
-</web-app>
->>>>>>> 9 patches
