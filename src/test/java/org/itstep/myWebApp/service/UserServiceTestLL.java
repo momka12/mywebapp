@@ -14,6 +14,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
 
+import static org.itstep.myWebApp.UserTestData.USER_SAVE;
+
 @ContextConfiguration({"classpath:spring.xml", "classpath:spr-db.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
 @Sql(scripts = "classpath:db/initDB.sql")
@@ -42,7 +44,9 @@ public class UserServiceTestLL {
 
     @Test
     public void save() throws Exception {
-
+        service.save(USER_SAVE);
+        User user = service.getById(4);
+        Assert.assertEquals(USER_SAVE, user);
     }
 
     @Test(expected = NotFoundException.class)
