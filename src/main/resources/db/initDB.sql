@@ -1,7 +1,7 @@
-DROP TABLE IF EXISTS usersJAVA.dbo.users
+DROP TABLE usersJAVA.dbo.users
 
 CREATE TABLE usersJAVA.dbo.users (
-  id INT PRIMARY KEY NOT NULL,
+  id INT IDENTITY PRIMARY KEY NOT NULL,
   name VARCHAR(20) NOT NULL,
   lastname VARCHAR(25) NOT NULL,
   city VARCHAR(25),

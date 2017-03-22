@@ -23,16 +23,17 @@ public class DbUserRepository implements UserRepository {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
-    @Autowired
+
     private SimpleJdbcInsert jdbcInsert;
+
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Autowired
     public DbUserRepository(DataSource dataSource) {
         jdbcInsert = new SimpleJdbcInsert(dataSource)
-                .withTableName("USERS")
-                .usingColumns("id");
+                .withTableName("users")
+                .usingGeneratedKeyColumns("id");
     }
 
     @Override
@@ -53,6 +54,7 @@ public class DbUserRepository implements UserRepository {
         mapSqlParameterSource.addValue("email", user.getEmail());
         mapSqlParameterSource.addValue("lastname", user.getLastname());
         if (user.getId() == null) {
+//            jdbcInsert.execute(mapSqlParameterSource);
             int id = jdbcInsert.executeAndReturnKey(mapSqlParameterSource).intValue();
             user.setId(id);
         } else {
@@ -65,6 +67,10 @@ public class DbUserRepository implements UserRepository {
 
     @Override
     public User getById(Integer id) {
-        return jdbcTemplate.queryForObject("SELECT * FROM users WHERE id=?",rowMapper, id);
+        try {
+            return jdbcTemplate.queryForObject("SELECT * FROM users WHERE id=?", rowMapper, id);
+        } catch (Exception ex) {
+            return null;
+        }
     }
 }

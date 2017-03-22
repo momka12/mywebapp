@@ -17,7 +17,7 @@ import java.util.List;
 @ContextConfiguration({"classpath:spring.xml", "classpath:spr-db.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
 @Sql(scripts = "classpath:db/initDB.sql")
-public class UserServiceTest {
+public class UserServiceTestLL {
 
     @Autowired
     private UserService service;
@@ -25,19 +25,19 @@ public class UserServiceTest {
     @Test
     public void getAll() throws Exception {
         List<User> users = service.getAll();
-        Assert.assertEquals(2, users.size());
+        Assert.assertEquals(3, users.size());
     }
 
     @Test
     @DirtiesContext
     public void delete() throws Exception {
-        service.delete(1);
-        Assert.assertEquals(1, service.getAll().size());
+        service.delete(3);
+        Assert.assertEquals(2, service.getAll().size());
     }
 
     @Test(expected = NotFoundException.class)
     public void deleteNotFound() throws Exception {
-        service.delete(0);
+        service.delete(999);
     }
 
     @Test
@@ -52,7 +52,7 @@ public class UserServiceTest {
 
     @Test
     public void getById() throws Exception {
-        User user = service.getById(1);
+        User user = service.getById(2);
     }
 
 }
