@@ -2,9 +2,14 @@ package org.itstep.myWebApp.model;
 
 import org.hibernate.validator.constraints.Email;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-public class User extends Entity {
+@Entity
+@Table(name = "users")
+public class User extends MyEntity {
 
     private String lastname;
 

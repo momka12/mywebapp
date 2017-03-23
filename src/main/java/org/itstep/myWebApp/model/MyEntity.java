@@ -1,7 +1,12 @@
 package org.itstep.myWebApp.model;
 
-public class Entity {
+import javax.persistence.*;
 
+@MappedSuperclass
+public class MyEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
 
     protected String name;
@@ -25,12 +30,12 @@ public class Entity {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Entity)) return false;
+        if (!(o instanceof MyEntity)) return false;
 
-        Entity entity = (Entity) o;
+        MyEntity myEntity = (MyEntity) o;
 
-        if (id != null ? !id.equals(entity.id) : entity.id != null) return false;
-        return name != null ? name.equals(entity.name) : entity.name == null;
+        if (id != null ? !id.equals(myEntity.id) : myEntity.id != null) return false;
+        return name != null ? name.equals(myEntity.name) : myEntity.name == null;
 
     }
 
@@ -43,7 +48,7 @@ public class Entity {
 
     @Override
     public String toString() {
-        return "Entity{" +
+        return "MyEntity{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';
