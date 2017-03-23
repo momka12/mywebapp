@@ -1,13 +1,15 @@
-DROP TABLE IF EXISTS users;
+DROP TABLE usersJAVA.dbo.users
 
-CREATE TABLE users
-(
-  id INTEGER PRIMARY KEY AUTO_INCREMENT,
-  name VARCHAR(15),
-  lastname VARCHAR(20),
-  city VARCHAR(30),
-  email VARCHAR(25) UNIQUE
+CREATE TABLE usersJAVA.dbo.users (
+  id INT IDENTITY PRIMARY KEY NOT NULL,
+  name VARCHAR(20) NOT NULL,
+  lastname VARCHAR(25) NOT NULL,
+  city VARCHAR(25),
+  email VARCHAR(35)
 );
+CREATE UNIQUE INDEX users_id_uindex ON users (id);
+CREATE UNIQUE INDEX users_email_uindex ON users (email);
 
-INSERT INTO users VALUES (NULL, 'NICK', 'DALLAS', 'DNIPRO', 'user@gmail.com');
-INSERT INTO users VALUES (NULL, 'ANGELA', 'HIKE', 'KYIV', 'ang@yahoo.com');
+INSERT INTO users VALUES ('petrik', 'ivanov', 'dnepr', 'petr@mail.com');
+INSERT INTO users VALUES ('maria', 'forma', 'odessa', 'maria@mail.com');
+INSERT INTO users VALUES ('romka', 'fich', 'dnepr', 'romka@mail.com');
