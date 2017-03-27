@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -25,9 +26,11 @@ public class UserServiceTest {
     public void getAll() throws Exception {
         List<User> users = service.getAll();
         Assert.assertEquals(2, users.size());
+        Assert.assertArrayEquals(new User[]{UserTestData.USER_1, UserTestData.USER_2}, users.toArray());
     }
 
     @Test
+    @Transactional
     public void delete() throws Exception {
         service.delete(1);
         Assert.assertEquals(1, service.getAll().size());
@@ -39,9 +42,12 @@ public class UserServiceTest {
     }
 
     @Test
+    @Transactional
     public void save() throws Exception {
         User save = service.save(UserTestData.USER_4);
-        assert 3 == save.getId();
+        UserTestData.USER_4.setId(3);
+        Assert.assertEquals(UserTestData.USER_4, save);
+        Assert.assertEquals(3, service.getAll().size());
     }
 
     @Test(expected = NotFoundException.class)
@@ -52,6 +58,7 @@ public class UserServiceTest {
     @Test
     public void getById() throws Exception {
         User user = service.getById(1);
+        Assert.assertEquals(UserTestData.USER_1, user);
     }
 
 }

@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import javax.xml.bind.SchemaOutputResolver;
 import java.util.List;
 
 @Repository
@@ -25,7 +26,7 @@ public class JdbcUserRepository implements UserRepository {
     public JdbcUserRepository(DataSource dataSource) {
         this.insert = new SimpleJdbcInsert(dataSource)
                 .withTableName("users")
-                .usingColumns("id");
+                .usingGeneratedKeyColumns("id");
     }
 
     @Autowired
@@ -47,8 +48,9 @@ public class JdbcUserRepository implements UserRepository {
     @Override
     public User save(User user) {
 
+        System.out.println(user);
+
         MapSqlParameterSource map = new MapSqlParameterSource();
-        map.addValue("id", user.getId());
         map.addValue("name", user.getName());
         map.addValue("lastname", user.getLastname());
         map.addValue("city", user.getCity());
@@ -58,10 +60,13 @@ public class JdbcUserRepository implements UserRepository {
             Number number = insert.executeAndReturnKey(map);
             user.setId(number.intValue());
         } else {
+            map.addValue("id", user.getId());
             namedParameterJdbcTemplate
                     .update("UPDATE users SET name=:name, lastname=:lastname, city=:city, email=:email " +
                             "WHERE id=:id", map);
         }
+
+        System.out.println(user);
 
         return user;
     }
