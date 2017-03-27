@@ -25,15 +25,15 @@ public class UserServiceTest {
     @Test
     public void getAll() throws Exception {
         List<User> users = service.getAll();
-        Assert.assertEquals(2, users.size());
-        Assert.assertArrayEquals(new User[]{UserTestData.USER_1, UserTestData.USER_2}, users.toArray());
+        Assert.assertEquals(3, users.size());
+        Assert.assertArrayEquals(new User[]{UserTestData.USER_1, UserTestData.USER_2, UserTestData.USER_3}, users.toArray());
     }
 
     @Test
     @Transactional
     public void delete() throws Exception {
         service.delete(1);
-        Assert.assertEquals(1, service.getAll().size());
+        Assert.assertEquals(2, service.getAll().size());
     }
 
     @Test(expected = NotFoundException.class)
@@ -44,15 +44,15 @@ public class UserServiceTest {
     @Test
     @Transactional
     public void save() throws Exception {
-        User save = service.save(UserTestData.USER_4);
-        UserTestData.USER_4.setId(3);
-        Assert.assertEquals(UserTestData.USER_4, save);
-        Assert.assertEquals(3, service.getAll().size());
+        User save = service.save(UserTestData.USER_5);
+        UserTestData.USER_5.setId(4);
+        Assert.assertEquals(UserTestData.USER_5, save);
+        Assert.assertEquals(4, service.getAll().size());
     }
 
     @Test(expected = NotFoundException.class)
     public void updateNotFound() throws Exception {
-        service.update(UserTestData.USER_3);
+        service.update(UserTestData.USER_4);
     }
 
     @Test
