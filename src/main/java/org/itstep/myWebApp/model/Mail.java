@@ -77,10 +77,6 @@ public class Mail extends BaseEntity {
         return userId;
     }
 
-    public void setUser(Integer userId) {
-        this.userId = userId;
-    }
-
     public void setUserId(Integer userId) {
         this.userId = userId;
     }

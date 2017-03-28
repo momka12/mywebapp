@@ -10,9 +10,7 @@ import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.Arrays;
 
-import static org.itstep.myWebApp.UserTestData.MAIL_1;
-import static org.itstep.myWebApp.UserTestData.USER_1;
-import static org.itstep.myWebApp.UserTestData.USER_2;
+import static org.itstep.myWebApp.UserTestData.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -29,7 +27,7 @@ public class UserRestControllerTest extends WebTest{
         mockMvc.perform(get("/rest/users"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(content().string(objectMapper.writeValueAsString(Arrays.asList(USER_1, USER_2))))
+                .andExpect(content().string(objectMapper.writeValueAsString(Arrays.asList(USER_1, USER_2, USER_3))))
                 .andDo(print());
     }
 

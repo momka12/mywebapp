@@ -15,7 +15,6 @@
 
     <!--annotation dependency injections-->
     <context:annotation-config/>
-    <context:component-scan base-package="org.itstep.myWebApp.repository.datajpa"/>
     <context:component-scan base-package="org.itstep.myWebApp.service"/>
 
 </beans>

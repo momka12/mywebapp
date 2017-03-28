@@ -17,7 +17,7 @@ import java.util.List;
 @ContextConfiguration({"classpath:spring/spring-app.xml", "classpath:spring/spr-db.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
 @Sql(scripts = "classpath:db/initDB.sql")
-public class UserServiceTest {
+public abstract class UserServiceTest {
 
     @Autowired
     private UserService service;
@@ -30,7 +30,6 @@ public class UserServiceTest {
     }
 
     @Test
-    @Transactional
     public void delete() throws Exception {
         service.delete(1);
         Assert.assertEquals(2, service.getAll().size());
@@ -42,7 +41,6 @@ public class UserServiceTest {
     }
 
     @Test
-    @Transactional
     public void save() throws Exception {
         User save = service.save(UserTestData.USER_5);
         UserTestData.USER_5.setId(4);

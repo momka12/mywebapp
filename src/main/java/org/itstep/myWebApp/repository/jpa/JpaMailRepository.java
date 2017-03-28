@@ -1,4 +1,4 @@
-package org.itstep.myWebApp.repository.mock;
+package org.itstep.myWebApp.repository.jpa;
 
 import org.itstep.myWebApp.model.Mail;
 import org.itstep.myWebApp.repository.MailRepository;
@@ -7,9 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class MockMailRepository implements MailRepository {
-
-
+public class JpaMailRepository implements MailRepository {
     @Override
     public List getAll(Integer userId) {
         return null;

@@ -17,8 +17,9 @@ public class MockUserRepository implements UserRepository {
     private AtomicInteger counter = new AtomicInteger(1);
 
     {
-        save(new User("nick", "dalls", "dnipro", "user@gmail.com"));
-        save(new User("angela", "hike", "kyiv", "ang@yahoo.com"));
+        save(new User("petrik", "ivanov", "dnepr", "petr@mail.com"));
+        save(new User("maria", "forma", "odessa", "maria@mail.com"));
+        save(new User("romka", "fich", "dnepr", "romka@mail.com"));
     }
 
     public List<User> getAll() {
