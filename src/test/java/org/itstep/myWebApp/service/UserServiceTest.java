@@ -4,9 +4,11 @@ import org.itstep.myWebApp.UserTestData;
 import org.itstep.myWebApp.model.User;
 import org.itstep.myWebApp.util.NotFoundException;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -21,6 +23,11 @@ public abstract class UserServiceTest {
 
     @Autowired
     private UserService service;
+
+    @Before
+    public void method(){
+        service.evictCache();
+    }
 
     @Test
     public void getAll() throws Exception {

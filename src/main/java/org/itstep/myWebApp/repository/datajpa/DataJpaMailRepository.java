@@ -2,15 +2,20 @@ package org.itstep.myWebApp.repository.datajpa;
 
 import org.itstep.myWebApp.model.Mail;
 import org.itstep.myWebApp.repository.MailRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
 public class DataJpaMailRepository implements MailRepository {
+
+    @Autowired
+    private ProxyRepoMail data;
+
     @Override
     public List getAll(Integer userId) {
-        return null;
+        return data.findAll();
     }
 
     @Override

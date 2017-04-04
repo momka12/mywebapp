@@ -4,10 +4,7 @@ import org.itstep.myWebApp.model.User;
 import org.itstep.myWebApp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -20,6 +17,11 @@ public class UserController {
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView getAll() {
         return new ModelAndView("userList", "userList", service.getAll());
+    }
+
+    @GetMapping(value = "/{id}")
+    public ModelAndView getOne(@PathVariable(value = "id") Integer id){
+        return new ModelAndView("user", "user", service.getById(id));
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.GET)

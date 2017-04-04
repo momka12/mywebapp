@@ -1,7 +1,6 @@
 package org.itstep.myWebApp.model;
 
 import org.hibernate.validator.constraints.Email;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
