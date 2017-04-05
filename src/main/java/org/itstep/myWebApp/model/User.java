@@ -3,6 +3,7 @@ package org.itstep.myWebApp.model;
 import org.hibernate.validator.constraints.Email;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -21,6 +22,17 @@ public class User extends BaseEntity {
     @Email
     @Column(name = "email", unique = true)
     private String email;
+
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "users", targetEntity = org.itstep.myWebApp.model.Role.class)
+    private Set<Role> roles;
+
+    @Column(name = "password")
+    @NotNull
+    private String pass;
+
+    @Column(name = "enabled")
+    @NotNull
+    private boolean enabled;
 
     public User() {
     }

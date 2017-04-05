@@ -20,7 +20,6 @@
 
     <%-- jstl realization - без костылей :)--%>
         <tr>
-            <jsp:useBean id="user" class="org.itstep.myWebApp.model.User"/>
             <td>${user.name}</td>
             <td>${user.lastname}</td>
             <td>${user.city}</td>
