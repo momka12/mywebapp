@@ -23,16 +23,9 @@ public class User extends BaseEntity {
     @Column(name = "email", unique = true)
     private String email;
 
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "users", targetEntity = org.itstep.myWebApp.model.Role.class)
-    private Set<Role> roles;
+    @OneToOne(mappedBy = "user")
+    private SecurityUser sUser;
 
-    @Column(name = "password")
-    @NotNull
-    private String pass;
-
-    @Column(name = "enabled")
-    @NotNull
-    private boolean enabled;
 
     public User() {
     }

@@ -1,22 +1,24 @@
-INSERT INTO users(name, lastname, city, email, password, enabled) VALUES ('petrik', 'ivanov', 'dnepr', 'petr@mail.com', '123', 'true')
-
-INSERT INTO users(name, lastname, city, email, password, enabled) VALUES ('maria', 'forma', 'odessa', 'maria@mail.com', '123', 'true')
-
-INSERT INTO users(name, lastname, city, email, password, enabled) VALUES ('romka', 'fich', 'ffsdfs', 'romka@mail.com', '123', 'true')
-
-INSERT INTO users(name, lastname, city, email, password, enabled) VALUES ('admin', 'fich', 'ffsdfs', 'admin@mail.com', '123', 'true')
-INSERT INTO users(name, lastname, city, email, password, enabled) VALUES ('rest', 'fich', 'ffsdfs', 'rest@mail.com', '123', 'true')
-INSERT INTO users(name, lastname, city, email, password, enabled) VALUES ('user', 'fich', 'ffsdfs', 'user@mail.com', '123', 'true')
+INSERT INTO users(name, lastname, city, email) VALUES ('petrik', 'ivanov', 'dnepr', 'petr@mail.com')
+INSERT INTO users(name, lastname, city, email) VALUES ('maria', 'forma', 'odessa', 'maria@mail.com')
+INSERT INTO users(name, lastname, city, email) VALUES ('romka', 'fich', 'ffsdfs', 'romka@mail.com')
+INSERT INTO users(name, lastname, city, email) VALUES ('admin', 'fich', 'ffsdfs', 'admin@mail.com')
+INSERT INTO users(name, lastname, city, email) VALUES ('rest', 'fich', 'ffsdfs', 'rest@mail.com')
+INSERT INTO users(name, lastname, city, email) VALUES ('user', 'fich', 'ffsdfs', 'user@mail.com')
 
 INSERT INTO roles(name) VALUES ('ROLE_ADMIN')
 INSERT INTO roles(name) VALUES ('ROLE_REST')
 INSERT INTO roles(name) VALUES ('ROLE_USER')
 
-INSERT INTO roles_users(roles_id, users_id) VALUES (1,4)
-INSERT INTO roles_users(roles_id, users_id) VALUES (2,5)
-INSERT INTO roles_users(roles_id, users_id) VALUES (3,6)
-INSERT INTO roles_users(roles_id, users_id) VALUES (3,1)
-INSERT INTO roles_users(roles_id, users_id) VALUES (3,2)
-INSERT INTO roles_users(roles_id, users_id) VALUES (3,3)
+INSERT INTO securityUsers(enabled, locked, login, password, user_id) VALUES ('true', 'false', 'admin', '123', 4)
+INSERT INTO securityUsers(enabled, locked, login, password, user_id) VALUES ('true', 'false', 'rest', '123', 5)
+INSERT INTO securityUsers(enabled, locked, login, password, user_id) VALUES ('true', 'false', 'user', '123', 6)
+INSERT INTO securityUsers(enabled, locked, login, password, user_id) VALUES ('true', 'false', 'user2', '123', 1)
+INSERT INTO securityUsers(enabled, locked, login, password, user_id) VALUES ('true', 'false', 'user3', '123', 2)
+INSERT INTO securityUsers(enabled, locked, login, password, user_id) VALUES ('true', 'false', 'user4', '123', 3)
 
-
+INSERT INTO roles_securityUsers(roles_id, users_id) VALUES (1,4)
+INSERT INTO roles_securityUsers(roles_id, users_id) VALUES (2,5)
+INSERT INTO roles_securityUsers(roles_id, users_id) VALUES (3,6)
+INSERT INTO roles_securityUsers(roles_id, users_id) VALUES (3,1)
+INSERT INTO roles_securityUsers(roles_id, users_id) VALUES (3,2)
+INSERT INTO roles_securityUsers(roles_id, users_id) VALUES (3,3)
